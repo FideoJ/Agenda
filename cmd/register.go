@@ -17,6 +17,7 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/FideoJ/Agenda/service"
 	"github.com/spf13/cobra"
 )
 
@@ -32,10 +33,21 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("register called")
+		username, _ := cmd.Flags().GetString("username")
+		password, _ := cmd.Flags().GetString("password")
+		email, _ := cmd.Flags().GetString("email")
+		phone, _ := cmd.Flags().GetString("phone")
+
+		service.Register(username, password, email, phone)
 	},
 }
 
 func init() {
+	registerCmd.Flags().StringP("username", "u", "", "Username")
+	registerCmd.Flags().StringP("password", "p", "", "Password")
+	registerCmd.Flags().StringP("email", "e", "", "Email")
+	registerCmd.Flags().StringP("phone", "t", "", "Phone")
+
 	RootCmd.AddCommand(registerCmd)
 
 	// Here you will define your flags and configuration settings.
