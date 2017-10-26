@@ -24,13 +24,11 @@ import (
 // registerCmd represents the register command
 var registerCmd = &cobra.Command{
 	Use:   "register",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "register：用户登录",
+	Long: `1. 用户使用用户名和密码登录 Agenda 系统。
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+2. 用户名和密码同时正确则登录成功并反馈一个成功登录的信息。
+否则，登录失败并反馈一个失败登录的信息。`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("register called")
 		username, _ := cmd.Flags().GetString("username")
