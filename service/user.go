@@ -10,9 +10,16 @@ import (
 
 func Register(username string, password string, email string, phone string) error {
 	users := storage.LoadUsers()
+	if username == "" {
+		return err.RegWithEmptyUsername
+	}
+	if password == "" {
+		return err.RegWithEmptyPassword
+	}
 	if users.Query(username) != nil {
 		return err.UserAlreadyExists
 	}
+
 	users.Add(&entity.User{
 		Username: username,
 		Password: password,
@@ -39,5 +46,18 @@ func Query(username string, password string) error {
 		}
 	}
 
+	return nil
+}
+
+func Delete(username string, password string) error {
+	users := storage.LoadUsers()
+	if qusr := users.Query(username); qusr != nil && qusr.Password == password {
+		users.Delete(qusr)
+		// need change to log
+		fmt.Printf("Delete User [%+v] Successfully.\n", username)
+	} else {
+		fmt.Println("Deleted Failed. Please check the username and Password.")
+	}
+	storage.StoreUsers(users)
 	return nil
 }

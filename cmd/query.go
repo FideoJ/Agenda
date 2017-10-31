@@ -17,6 +17,7 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/MarshallW906/Agenda/service"
 	"github.com/spf13/cobra"
 )
 
@@ -32,11 +33,14 @@ specify -p without -u will be ignored.
 If neither -u nor -p is specified, query will simply print all the registered users' username.`,
 
 	Run: func(cmd *cobra.Command, args []string) {
+		// need change to log
 		fmt.Println("query called")
 		username, _ := cmd.Flags().GetString("username")
-		email, _ := cmd.Flags().GetString("email")
+		password, _ := cmd.Flags().GetString("password")
 
-		fmt.Printf("query Users by Username:[%+v], by Email:[%+v]\n", username, email)
+		// need change to log
+		fmt.Printf("query Users by Username:[%+v] and Password:[%+v]\n", username, password)
+		service.Query(username, password)
 	},
 }
 

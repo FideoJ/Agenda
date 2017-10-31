@@ -17,6 +17,7 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/MarshallW906/Agenda/service"
 	"github.com/spf13/cobra"
 )
 
@@ -31,11 +32,14 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
+		// need change to log
 		fmt.Println("delete called")
 		username, _ := cmd.Flags().GetString("username")
 		password, _ := cmd.Flags().GetString("password")
 
+		// need change to log
 		fmt.Printf("try to delete user of Username:[%+v], Password:[%+v]\n", username, password)
+		service.Delete(username, password)
 	},
 }
 
