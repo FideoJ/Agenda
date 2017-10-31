@@ -20,3 +20,12 @@ func Register(username string, password string, email string, phone string) erro
 	storage.StoreUsers(users)
 	return nil
 }
+
+func Login(username string, password string) error {
+	users := storage.LoadUsers()
+	if users.Query(username) == nil {
+		return err.UserNotExists
+	}
+	storage.StoreUsers(users)
+	return nil
+}
