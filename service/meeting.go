@@ -3,9 +3,9 @@ package service
 import (
 	"time"
 
-	"github.com/MarshallW906/Agenda/entity"
-	"github.com/MarshallW906/Agenda/err"
-	"github.com/MarshallW906/Agenda/storage"
+	"github.com/FideoJ/Agenda/entity"
+	"github.com/FideoJ/Agenda/err"
+	"github.com/FideoJ/Agenda/storage"
 )
 
 var (

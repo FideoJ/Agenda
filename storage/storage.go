@@ -3,7 +3,7 @@ package storage
 import (
 	"os"
 
-	"github.com/MarshallW906/Agenda/entity"
+	"github.com/FideoJ/Agenda/entity"
 )
 
 func LoadUsers() entity.Users {
