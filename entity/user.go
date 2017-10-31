@@ -12,6 +12,11 @@ type User struct {
 	Phone    string
 }
 
+type LoginData struct {
+	Username string
+	State bool
+}
+
 type Users map[string]*User
 
 func (users Users) Query(username string) *User {
@@ -39,4 +44,21 @@ func DeserializeUser(r io.Reader) Users {
 		}
 		users.Add(&user)
 	}
+}
+
+func CheckLoginState(r io.Reader) (bool, string) {
+	decoder := json.NewDecoder(r)
+	var cur LoginData
+	decoder.Decode(&cur)
+	
+	return cur.State, cur.Username
+}
+
+func ChangeLoginState(username string, w io.Writer) {
+	encoder := json.NewEncoder(w)
+	var cur = LoginData{
+		Username:username,
+		State:true,
+	}
+	encoder.Encode(cur)
 }
