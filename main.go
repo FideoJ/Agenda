@@ -14,7 +14,7 @@
 
 package main
 
-import "github.com/FideoJ/Agenda/cmd"
+import "github.com/MarshallW906/Agenda/cmd"
 
 func main() {
 	cmd.Execute()

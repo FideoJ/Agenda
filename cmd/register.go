@@ -17,7 +17,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/FideoJ/Agenda/service"
+	"github.com/MarshallW906/Agenda/service"
 	"github.com/spf13/cobra"
 )
 
