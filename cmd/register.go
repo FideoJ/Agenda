@@ -46,7 +46,7 @@ to quickly create a Cobra application.`,
 		phone, _ := cmd.Flags().GetString("phone")
 
 		infoLog.Printf("register with username:[%+v], password:[%+v], email:[%+v], phone:[%+v]", username, password, email, phone)
-		if err := service.Register(username, password, email, phone); err != nil {
+		if err := service.Register(username, password, email, phone); err == nil {
 			infoLog.Println("Register SUCCEEDED.")
 		} else {
 			errorLog.Fatalln(err)
