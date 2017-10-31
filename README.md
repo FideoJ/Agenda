@@ -1,5 +1,5 @@
 # Agenda-go
-[travisCI](https://travis-ci.org/MarshallW906/Agenda.svg?branch=dev)
+![travisCI](https://travis-ci.org/MarshallW906/Agenda.svg?branch=dev)
 
 ## Introdution
 Agenda是一个基于命令行界面的会议管理程序，使用golang实现。
