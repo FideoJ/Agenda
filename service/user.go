@@ -1,6 +1,8 @@
 package service
 
 import (
+	"fmt"
+
 	"github.com/FideoJ/Agenda/entity"
 	"github.com/FideoJ/Agenda/err"
 	"github.com/FideoJ/Agenda/storage"
@@ -21,7 +23,13 @@ func Register(username string, password string, email string, phone string) erro
 	return nil
 }
 
-func Query(username string, email string) error {
-	// users := storage.LoadUsers()
+func Query(username string, password string) error {
+	users := storage.LoadUsers()
+	if qusr := users.Query(username); qusr != nil && qusr.Password == password {
+		fmt.Printf("username: %+v, e-mail: %+v, phone: %+v\n", qusr.Username, qusr.Email, qusr.Phone)
+	} else {
+		fmt.Print("Cannot find this user. check the username and password.")
+	}
+
 	return nil
 }
