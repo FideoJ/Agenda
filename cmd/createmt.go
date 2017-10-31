@@ -17,6 +17,7 @@ package cmd
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/MarshallW906/Agenda/service"
 	"github.com/spf13/cobra"
@@ -45,19 +46,19 @@ to quickly create a Cobra application.`,
 		endTimeStr, _ := cmd.Flags().GetString("endtime")
 		participants, _ := cmd.Flags().GetStringSlice("participants")
 
-		fmt.Println("Title:", title)
-		fmt.Println("startTimeStr:", startTimeStr)
-		fmt.Println("endTimeStr:", endTimeStr)
-		fmt.Println("participants:", participants)
+		infoLog.Printf("Title: [%+v], startTimeStr: [%+v], endTimeStr: [%+v], participants: [%+v]\n", title, startTimeStr, endTimeStr, participants)
 		if err := service.CreateMt(title, startTimeStr, endTimeStr, participants); err == nil {
-			log.Println("createmt")
+			infoLog.Println("Create Meeting SUCCEEDED")
 		} else {
-			log.Fatalln(err)
+			errorLog.Fatalln(err)
 		}
 	},
 }
 
 func init() {
+	infoLog = log.New(os.Stdout, "Info: ", log.Ldate|log.Ltime|log.Lshortfile)
+	errorLog = log.New(os.Stderr, "Error: ", log.Ldate|log.Ltime|log.Lshortfile)
+
 	RootCmd.AddCommand(createmtCmd)
 
 	createmtCmd.Flags().StringP("title", "t", "", "meeting's title")
