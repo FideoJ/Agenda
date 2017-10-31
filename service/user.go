@@ -25,6 +25,7 @@ func Register(username string, password string, email string, phone string) erro
 
 func Query(username string, password string) error {
 	users := storage.LoadUsers()
+
 	if qusr := users.Query(username); qusr != nil && qusr.Password == password {
 		fmt.Printf("username: %+v, e-mail: %+v, phone: %+v\n", qusr.Username, qusr.Email, qusr.Phone)
 	} else {
