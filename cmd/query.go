@@ -33,12 +33,16 @@ If neither -u nor -e is specified, query will simply print all the users.`,
 
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("query called")
+		username, _ := cmd.Flags().GetString("username")
+		email, _ := cmd.Flags().GetString("email")
+
+		fmt.Printf("query Users by Username:[%+v], by Email:[%+v]\n", username, email)
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(queryCmd)
-
 	queryCmd.Flags().StringP("username", "u", "", "query string on username")
 	queryCmd.Flags().StringP("email", "e", "", "query string on e-mail")
+
+	RootCmd.AddCommand(queryCmd)
 }

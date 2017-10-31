@@ -32,11 +32,18 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("delete called")
+		username, _ := cmd.Flags().GetString("username")
+		password, _ := cmd.Flags().GetString("password")
+
+		fmt.Printf("try to delete user of Username:[%+v], Password:[%+v]\n", username, password)
 	},
 }
 
 func init() {
 	RootCmd.AddCommand(deleteCmd)
+
+	deleteCmd.Flags().StringP("username", "u", "", "specify the to-delete user's username")
+	deleteCmd.Flags().StringP("password", "p", "", "specify the to-delete user's password")
 
 	// Here you will define your flags and configuration settings.
 
