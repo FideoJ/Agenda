@@ -16,8 +16,8 @@ func init() {
 	timeLayoutStr = "2006-01-02/15:04:05"
 }
 
-func CreateMt(title string, startTimeStr string, endTimeStr string, sponsor string, participants []string) error {
-	users := storage.LoadUsers()
+func CreateMt(title string, startTimeStr string, endTimeStr string, participants []string) error {
+	// users := storage.LoadUsers()
 	meetings := storage.LoadMeetings()
 	if meetings.Query(title) != nil {
 		return err.MeetingTitleAlreadyExists
@@ -31,7 +31,8 @@ func CreateMt(title string, startTimeStr string, endTimeStr string, sponsor stri
 	if terr != nil {
 		return terr
 	}
-	sponsorUsr := users.Query(sponsor)
+
+	var sponsorUsr *entity.User
 
 	meetings.Add(&entity.Meeting{
 		Title:        title,
