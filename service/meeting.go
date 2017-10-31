@@ -13,7 +13,7 @@ var (
 )
 
 func init() {
-	timeLayoutStr = "2006-01-02 15:04:05"
+	timeLayoutStr = "2006-01-02/15:04:05"
 }
 
 func CreateMt(title string, startTimeStr string, endTimeStr string, sponsor string, participants []string) error {
