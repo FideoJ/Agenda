@@ -26,9 +26,9 @@ var queryCmd = &cobra.Command{
 	Short: "Query a User by Username and/or E-mail.",
 	Long: `Query a User by Username and/or E-mail.
 
-If there is a username contains the provided string,
-or there is an e-mail contains the provided string,
-Agenda query will print that user.
+If there is a username equals to(==) the provided string,
+and/or there is an e-mail equals to(==) the provided string,
+Agenda query will print that/those user.
 If neither -u nor -e is specified, query will simply print all the users.`,
 
 	Run: func(cmd *cobra.Command, args []string) {
