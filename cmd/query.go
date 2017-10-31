@@ -33,12 +33,12 @@ specify -p without -u will be ignored.
 If neither -u nor -p is specified, query will simply print all the registered users' username.`,
 
 	Run: func(cmd *cobra.Command, args []string) {
-		// need change to log
+		// log implemented in service/user.go
 		fmt.Println("query called")
 		username, _ := cmd.Flags().GetString("username")
 		password, _ := cmd.Flags().GetString("password")
 
-		// need change to log
+		// log implemented in service/user.go
 		fmt.Printf("query Users by Username:[%+v] and Password:[%+v]\n", username, password)
 		service.Query(username, password)
 	},
