@@ -16,9 +16,16 @@ package cmd
 
 import (
 	"fmt"
+	"log"
+	"os"
 
 	"github.com/MarshallW906/Agenda/service"
 	"github.com/spf13/cobra"
+)
+
+var (
+	infoLog  *log.Logger
+	errorLog *log.Logger
 )
 
 // registerCmd represents the register command
@@ -38,25 +45,22 @@ to quickly create a Cobra application.`,
 		email, _ := cmd.Flags().GetString("email")
 		phone, _ := cmd.Flags().GetString("phone")
 
-		service.Register(username, password, email, phone)
+		infoLog.Printf("register with username:[%+v], password:[%+v], email:[%+v], phone:[%+v]", username, password, email, phone)
+		if err := service.Register(username, password, email, phone); err != nil {
+			infoLog.Println("Register SUCCEEDED.")
+		} else {
+			errorLog.Fatalln(err)
+		}
 	},
 }
 
 func init() {
+	infoLog = log.New(os.Stdout, "Info: ", log.Ldate|log.Ltime|log.Lshortfile)
+	errorLog = log.New(os.Stderr, "Error: ", log.Ldate|log.Ltime|log.Lshortfile)
+
+	RootCmd.AddCommand(registerCmd)
 	registerCmd.Flags().StringP("username", "u", "", "Username")
 	registerCmd.Flags().StringP("password", "p", "", "Password")
 	registerCmd.Flags().StringP("email", "e", "", "Email")
 	registerCmd.Flags().StringP("phone", "t", "", "Phone")
-
-	RootCmd.AddCommand(registerCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// registerCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// registerCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

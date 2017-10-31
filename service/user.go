@@ -23,15 +23,12 @@ func init() {
 func Register(username string, password string, email string, phone string) error {
 	users := storage.LoadUsers()
 	if username == "" {
-		errorLog.Fatalln(err.RegWithEmptyUsername)
 		return err.RegWithEmptyUsername
 	}
 	if password == "" {
-		errorLog.Fatalln(err.RegWithEmptyPassword)
 		return err.RegWithEmptyPassword
 	}
 	if users.Query(username) != nil {
-		errorLog.Fatalln(err.UserAlreadyExists)
 		return err.UserAlreadyExists
 	}
 
@@ -41,7 +38,6 @@ func Register(username string, password string, email string, phone string) erro
 		Email:    email,
 		Phone:    phone,
 	})
-	infoLog.Printf("register with username:[%+v], password:[%+v], email:[%+v], phone:[%+v]", username, password, email, phone)
 	storage.StoreUsers(users)
 	return nil
 }
