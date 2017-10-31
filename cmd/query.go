@@ -22,14 +22,14 @@ import (
 
 // queryCmd represents the query command
 var queryCmd = &cobra.Command{
-	Use:   "query [-uUsername] [-eEmail]",
-	Short: "Query a User by Username and/or E-mail.",
-	Long: `Query a User by Username and/or E-mail.
+	Use:   "query [-uUsername] [-pPassword]",
+	Short: "Query a User by Username and Password.",
+	Long: `Query a User by Username and Password.
 
-If there is a username equals to(==) the provided string,
-and/or there is an e-mail equals to(==) the provided string,
-Agenda query will print that/those user.
-If neither -u nor -e is specified, query will simply print all the users.`,
+If the username exists and password is correct,
+Agenda query will print that user.
+specify -p without -u will be ignored.
+If neither -u nor -p is specified, query will simply print all the registered users' username.`,
 
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("query called")
@@ -41,8 +41,8 @@ If neither -u nor -e is specified, query will simply print all the users.`,
 }
 
 func init() {
-	queryCmd.Flags().StringP("username", "u", "", "query string on username")
-	queryCmd.Flags().StringP("email", "e", "", "query string on e-mail")
+	queryCmd.Flags().StringP("username", "u", "", "the target username")
+	queryCmd.Flags().StringP("password", "p", "", "the related password")
 
 	RootCmd.AddCommand(queryCmd)
 }
