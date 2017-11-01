@@ -16,21 +16,14 @@ package cmd
 
 import (
 	"fmt"
-	"log"
-	"os"
 
 	"github.com/FideoJ/Agenda/service"
 	"github.com/spf13/cobra"
 )
 
-var (
-	infoLog  *log.Logger
-	errorLog *log.Logger
-)
-
-// registerCmd represents the register command
-var registerCmd = &cobra.Command{
-	Use:   "register",
+// deleteCmd represents the delete command
+var deleteCmd = &cobra.Command{
+	Use:   "delete",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -39,28 +32,30 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("register called")
+		// log implemented in service/user.go
+		fmt.Println("delete called")
 		username, _ := cmd.Flags().GetString("username")
 		password, _ := cmd.Flags().GetString("password")
-		email, _ := cmd.Flags().GetString("email")
-		phone, _ := cmd.Flags().GetString("phone")
 
-		infoLog.Printf("register with username:[%+v], password:[%+v], email:[%+v], phone:[%+v]", username, password, email, phone)
-		if err := service.Register(username, password, email, phone); err == nil {
-			infoLog.Println("Register SUCCEEDED.")
-		} else {
-			errorLog.Fatalln(err)
-		}
+		// log implemented in service/user.go
+		fmt.Printf("try to delete user of Username:[%+v], Password:[%+v]\n", username, password)
+		service.Delete(username, password)
 	},
 }
 
 func init() {
-	infoLog = log.New(os.Stdout, "Info: ", log.Ldate|log.Ltime|log.Lshortfile)
-	errorLog = log.New(os.Stderr, "Error: ", log.Ldate|log.Ltime|log.Lshortfile)
+	RootCmd.AddCommand(deleteCmd)
 
-	RootCmd.AddCommand(registerCmd)
-	registerCmd.Flags().StringP("username", "u", "", "Username")
-	registerCmd.Flags().StringP("password", "p", "", "Password")
-	registerCmd.Flags().StringP("email", "e", "", "Email")
-	registerCmd.Flags().StringP("phone", "t", "", "Phone")
+	deleteCmd.Flags().StringP("username", "u", "", "specify the to-delete user's username")
+	deleteCmd.Flags().StringP("password", "p", "", "specify the to-delete user's password")
+
+	// Here you will define your flags and configuration settings.
+
+	// Cobra supports Persistent Flags which will work for this command
+	// and all subcommands, e.g.:
+	// deleteCmd.PersistentFlags().String("foo", "", "A help for foo")
+
+	// Cobra supports local flags which will only run when this command
+	// is called directly, e.g.:
+	// deleteCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

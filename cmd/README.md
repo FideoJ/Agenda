@@ -21,8 +21,8 @@
   - notes: 空串等价为通配符。
 - delete
   - usage: 用户删除
-  - args: None
-  - notes: None
+  - args: username string, password string
+  - notes: 均为必要项
 - createmt (createMeeting)
   - usage: 创建会议
   - args: title string, start_time string, end_time string

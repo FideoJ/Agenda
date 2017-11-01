@@ -22,6 +22,10 @@ func (users Users) Add(user *User) {
 	users[user.Username] = user
 }
 
+func (users Users) Delete(user *User) {
+	delete(users, user.Username)
+}
+
 func (users Users) Serialize(w io.Writer) {
 	encoder := json.NewEncoder(w)
 	for _, user := range users {
