@@ -23,31 +23,31 @@
   - usage: 用户删除
   - args: username string, password string
   - notes: 均为必要项
-- createMeeting
+- createmt (createMeeting)
   - usage: 创建会议
   - args: title string, start_time string, end_time string
   - notes: 均为必要项。end_time > start_time。
-- addParticipant
+- addpt (addParticipant)
   - usage: 增加会议参与者
   - args: title string, member string
   - notes: 均为必要项。
-- removeParticipant
+- rmpt (removeParticipant)
   - usage: 删除会议参与者
   - args: title string, member string
   - notes: 均为必要项。
-- queryMeeting
+- querymt (queryMeeting)
   - usage: 查询会议
   - args: start_time string, end_time string
   - notes: end_time >= start_time，相等时查询某个时间点的会议（在该时间点开始或结束的会议也被计入）。
-- cancelMeeting
+- cancelmt (cancelMeeting)
   - usage: 取消会议
   - args: title string
   - notes: 均为必要项。
-- quitMeeting
+- quitmt (quitMeeting)
   - usage: 退出会议
   - args: title string
   - notes: 均为必要项。
-- clearMeeting
+- clearmt (clearMeeting)
   - usage: 清空会议
   - args: None
   - notes: None
