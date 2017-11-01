@@ -1,4 +1,4 @@
-# Agenda子命令设计文档
+## 子命令设计
 - help
   - usage: 列出命令说明
   - args: command string (= "all")
@@ -52,5 +52,18 @@
   - args: None
   - notes: None
 
-**TODO：时间格式及精度（年月日or时分秒）待进一步明确**
-时间格式可以用go官方的time包，可以直接将表示时间的字符串格式化为时间。
+## TODO
+时间格式及精度（年月日or时分秒）待进一步明确
+
+## 编码约定
+1. 获得参数并排除空值，使用utils.GetNonEmptyString(cmd, flag)
+2. 调用service结束时，调用logger.Info("CMD called with ARGS", args...)
+3. 错误集中写在err/err.go中，出错时调用logger.FatalIf(err.SomeErr)，不再将错误传递给上层函数
+4. 可能接收到错误的地方（一般是别人写好的包），调用logger.FatalIf(err)
+5. 关心是否已登录时：
+```
+	_, loggedIn := storage.LoadCurUser()
+	if !loggedIn {
+		logger.FatalIf(err.RequireLoggedIn)
+	}
+```
