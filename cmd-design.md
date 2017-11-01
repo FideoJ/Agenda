@@ -6,15 +6,15 @@
 - register
   - usage: 用户注册
   - args: username string, password string, email string, phone string
-  - notes: 均为必要项
+  - notes: None
 - login
   - usage: 用户登录
   - args: username string, password string
-  - notes: 均为必要项
+  - notes: 若已登录，则先登出，无论是否能登录成功
 - logout
   - usage: 用户登出
   - args: None
-  - notes: None
+  - notes: 若未登录，则静默
 - listUsers
   - usage: 用户查询
   - args: None

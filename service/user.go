@@ -26,6 +26,8 @@ func Register(username string, password string, email string, phone string) {
 }
 
 func Login(username string, password string) {
+	Logout()
+
 	users := storage.LoadUsers()
 	user := users.Query(username)
 
