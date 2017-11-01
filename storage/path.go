@@ -12,15 +12,6 @@ func AgendaDir() string {
 	return home + "/.agenda/"
 }
 
-func CreateAgendaDir() {
-	path := AgendaDir()
-	mode := os.FileMode(0755)
-
-	if _, err := os.Stat(path); os.IsNotExist(err) {
-		os.Mkdir(path, mode)
-	}
-}
-
 func SessionFile() string {
 	return AgendaDir() + "session.json"
 }
@@ -31,4 +22,12 @@ func UserFile() string {
 
 func MeetingFile() string {
 	return AgendaDir() + "meetings.json"
+}
+
+func CreateAgendaDir() {
+	os.Mkdir(AgendaDir(), 0755)
+}
+
+func RemoveSessionFile() {
+	os.Remove(SessionFile())
 }

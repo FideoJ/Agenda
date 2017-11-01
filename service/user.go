@@ -38,12 +38,16 @@ func Login(username string, password string) {
 	})
 }
 
+func Logout() {
+	storage.RemoveSessionFile()
+}
+
 func ListAllUsers() {
 	users := storage.LoadUsers()
 
-	fmt.Printf("%20s %20s %20s\n", "USERNAME", "EMAIL", "PHONE")
+	fmt.Printf("%-20s %-20s %-20s\n", "USERNAME", "EMAIL", "PHONE")
 	for _, user := range users {
-		fmt.Printf("%20s %20s %20s\n", user.Username, user.Email, user.Phone)
+		fmt.Printf("%-20s %-20s %-20s\n", user.Username, user.Email, user.Phone)
 	}
 }
 

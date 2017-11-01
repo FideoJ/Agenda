@@ -36,7 +36,7 @@ func StoreMeetings(meetings entity.Meetings) {
 }
 
 func LoadSession() *entity.Session {
-	file, err := os.OpenFile(MeetingFile(), os.O_RDONLY|os.O_CREATE, 0644)
+	file, err := os.OpenFile(SessionFile(), os.O_RDONLY|os.O_CREATE, 0644)
 	logger.FatalIf(err)
 	session := entity.DeserializeSession(file)
 
@@ -44,7 +44,7 @@ func LoadSession() *entity.Session {
 }
 
 func StoreSession(session *entity.Session) {
-	file, err := os.OpenFile(MeetingFile(), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+	file, err := os.OpenFile(SessionFile(), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 	logger.FatalIf(err)
 	session.Serialize(file)
 }
