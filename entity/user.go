@@ -3,6 +3,8 @@ package entity
 import (
 	"encoding/json"
 	"io"
+
+	"../logger"
 )
 
 type User struct {
@@ -28,8 +30,11 @@ func (users Users) Delete(user *User) {
 
 func (users Users) Serialize(w io.Writer) {
 	encoder := json.NewEncoder(w)
+	var err error
+
 	for _, user := range users {
-		encoder.Encode(user)
+		err = encoder.Encode(user)
+		logger.FatalIf(err)
 	}
 }
 
@@ -37,9 +42,15 @@ func DeserializeUser(r io.Reader) Users {
 	decoder := json.NewDecoder(r)
 	users := make(Users)
 	var user User
+	var err error
+
 	for {
-		if err := decoder.Decode(&user); err == io.EOF {
+		err = decoder.Decode(&user)
+		if err == io.EOF {
 			return users
+		}
+		if err != nil {
+			logger.FatalIf(err)
 		}
 		users.Add(&user)
 	}

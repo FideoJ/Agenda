@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"io"
 	"time"
+
+	"../logger"
 )
 
 type Meeting struct {
@@ -26,8 +28,11 @@ func (meetings Meetings) Add(meeting *Meeting) {
 
 func (meetings Meetings) Serialize(w io.Writer) {
 	encoder := json.NewEncoder(w)
+	var err error
+
 	for _, meeting := range meetings {
-		encoder.Encode(meeting)
+		err = encoder.Encode(meeting)
+		logger.FatalIf(err)
 	}
 }
 
@@ -35,9 +40,15 @@ func DeserializeMeeting(r io.Reader) Meetings {
 	decoder := json.NewDecoder(r)
 	meetings := make(Meetings)
 	var meeting Meeting
+	var err error
+
 	for {
-		if err := decoder.Decode(&meeting); err == io.EOF {
+		err = decoder.Decode(&meeting)
+		if err == io.EOF {
 			return meetings
+		}
+		if err != nil {
+			logger.FatalIf(err)
 		}
 		meetings.Add(&meeting)
 	}

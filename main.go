@@ -14,7 +14,14 @@
 
 package main
 
-import "github.com/MarshallW906/Agenda/cmd"
+import (
+	"./cmd"
+	"./storage"
+)
+
+func init() {
+	storage.CreateAgendaDir()
+}
 
 func main() {
 	cmd.Execute()
