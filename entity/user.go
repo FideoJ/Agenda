@@ -41,17 +41,15 @@ func (users Users) Serialize(w io.Writer) {
 func DeserializeUser(r io.Reader) Users {
 	decoder := json.NewDecoder(r)
 	users := make(Users)
-	var user User
 	var err error
 
 	for {
+		user := new(User)
 		err = decoder.Decode(&user)
 		if err == io.EOF {
 			return users
 		}
-		if err != nil {
-			logger.FatalIf(err)
-		}
-		users.Add(&user)
+		logger.FatalIf(err)
+		users.Add(user)
 	}
 }

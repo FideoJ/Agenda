@@ -15,52 +15,34 @@
 package cmd
 
 import (
-	"fmt"
-	"log"
-	"os"
-
-	"github.com/FideoJ/Agenda/service"
+	"../logger"
+	"../service"
+	"../utils"
 	"github.com/spf13/cobra"
-)
-
-var (
-	infoLog  *log.Logger
-	errorLog *log.Logger
 )
 
 // registerCmd represents the register command
 var registerCmd = &cobra.Command{
 	Use:   "register",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Register a user",
+	Long:  `Register a user`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("register called")
-		username, _ := cmd.Flags().GetString("username")
-		password, _ := cmd.Flags().GetString("password")
-		email, _ := cmd.Flags().GetString("email")
-		phone, _ := cmd.Flags().GetString("phone")
+		username := utils.GetNonEmptyString(cmd, "username")
+		password := utils.GetNonEmptyString(cmd, "password")
+		email := utils.GetNonEmptyString(cmd, "email")
+		phone := utils.GetNonEmptyString(cmd, "phone")
 
-		infoLog.Printf("register with username:[%+v], password:[%+v], email:[%+v], phone:[%+v]", username, password, email, phone)
-		if err := service.Register(username, password, email, phone); err == nil {
-			infoLog.Println("Register SUCCEEDED.")
-		} else {
-			errorLog.Fatalln(err)
-		}
+		service.Register(username, password, email, phone)
+
+		logger.Info("Register called with username:[%+v], password:[%+v], email:[%+v], phone:[%+v]", username, password, email, phone)
 	},
 }
 
 func init() {
-	infoLog = log.New(os.Stdout, "Info: ", log.Ldate|log.Ltime|log.Lshortfile)
-	errorLog = log.New(os.Stderr, "Error: ", log.Ldate|log.Ltime|log.Lshortfile)
-
-	RootCmd.AddCommand(registerCmd)
 	registerCmd.Flags().StringP("username", "u", "", "Username")
 	registerCmd.Flags().StringP("password", "p", "", "Password")
 	registerCmd.Flags().StringP("email", "e", "", "Email")
 	registerCmd.Flags().StringP("phone", "t", "", "Phone")
+
+	RootCmd.AddCommand(registerCmd)
 }

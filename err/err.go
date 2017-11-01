@@ -5,6 +5,9 @@ import "errors"
 var (
 	UserAlreadyExists         error = errors.New("user already exists")
 	MeetingTitleAlreadyExists error = errors.New("title already exists")
-	RegWithEmptyUsername error = errors.New("Register with Empty Username")
-	RegWithEmptyPassword error = errors.New("Register with Empty Password")
+	WrongUsernameOrPassword error = errors.New("wrong username or password")
 )
+
+func RequireNonEmpty(key string) error {
+	return errors.New(key + " must be a non-empty value")
+}

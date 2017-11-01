@@ -11,16 +11,12 @@ var (
 )
 
 func init() {
-	infoLogger = log.New(os.Stdout, "[INFO] ", log.Ldate|log.Ltime|log.Lshortfile)
-	errLogger = log.New(os.Stderr, "[ERROR] ", log.Ldate|log.Ltime|log.Lshortfile)
+	infoLogger = log.New(os.Stdout, "[INFO] ", log.Ldate|log.Ltime)
+	errLogger = log.New(os.Stderr, "[ERROR] ", log.Ldate|log.Ltime)
 }
 
 func Info(format string, v ...interface{}) {
 	infoLogger.Printf(format, v...)
-	len := len(format)
-	if len > 0 && format[len-1] != '\n' {
-		infoLogger.Print("\n")
-	}
 }
 
 func ErrIf(err error) {

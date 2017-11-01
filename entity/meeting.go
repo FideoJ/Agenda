@@ -39,17 +39,15 @@ func (meetings Meetings) Serialize(w io.Writer) {
 func DeserializeMeeting(r io.Reader) Meetings {
 	decoder := json.NewDecoder(r)
 	meetings := make(Meetings)
-	var meeting Meeting
 	var err error
 
 	for {
+		meeting := new(Meeting)
 		err = decoder.Decode(&meeting)
 		if err == io.EOF {
 			return meetings
 		}
-		if err != nil {
-			logger.FatalIf(err)
-		}
-		meetings.Add(&meeting)
+		logger.FatalIf(err)
+		meetings.Add(meeting)
 	}
 }
