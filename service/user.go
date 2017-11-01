@@ -66,6 +66,10 @@ func DeleteUser(username string, password string) {
 		logger.FatalIf(err.WrongUsernameOrPassword)
 	}
 
+	curUser, _ := storage.LoadCurUser()
+	if curUser == username {
+		Logout()
+	}
 	users.Delete(user)
 	storage.StoreUsers(users)
 }

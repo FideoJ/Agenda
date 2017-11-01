@@ -22,7 +22,7 @@
 - delete
   - usage: 用户删除
   - args: username string, password string
-  - notes: 均为必要项
+  - notes: 若成功删除当前用户，登出
 - createmt (createMeeting)
   - usage: 创建会议
   - args: title string, start_time string, end_time string
