@@ -43,7 +43,7 @@ func DeserializeMeeting(r io.Reader) Meetings {
 
 	for {
 		meeting := new(Meeting)
-		err = decoder.Decode(&meeting)
+		err = decoder.Decode(meeting)
 		if err == io.EOF {
 			return meetings
 		}

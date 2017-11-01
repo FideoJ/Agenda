@@ -45,7 +45,7 @@ func DeserializeUser(r io.Reader) Users {
 
 	for {
 		user := new(User)
-		err = decoder.Decode(&user)
+		err = decoder.Decode(user)
 		if err == io.EOF {
 			return users
 		}

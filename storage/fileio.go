@@ -29,8 +29,22 @@ func LoadMeetings() entity.Meetings {
 	return meetings
 }
 
-func StoreMeetings(users entity.Meetings) {
+func StoreMeetings(meetings entity.Meetings) {
 	file, err := os.OpenFile(MeetingFile(), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 	logger.FatalIf(err)
-	users.Serialize(file)
+	meetings.Serialize(file)
+}
+
+func LoadSession() *entity.Session {
+	file, err := os.OpenFile(MeetingFile(), os.O_RDONLY|os.O_CREATE, 0644)
+	logger.FatalIf(err)
+	session := entity.DeserializeSession(file)
+
+	return session
+}
+
+func StoreSession(session *entity.Session) {
+	file, err := os.OpenFile(MeetingFile(), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+	logger.FatalIf(err)
+	session.Serialize(file)
 }

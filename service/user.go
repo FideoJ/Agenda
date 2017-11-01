@@ -25,6 +25,19 @@ func Register(username string, password string, email string, phone string) {
 	storage.StoreUsers(users)
 }
 
+func Login(username string, password string) {
+	users := storage.LoadUsers()
+	user := users.Query(username)
+
+	if user == nil || user.Password != password {
+		logger.FatalIf(err.WrongUsernameOrPassword)
+	}
+
+	storage.StoreSession(&entity.Session{
+		CurrentUser: username,
+	})
+}
+
 func ListAllUsers() {
 	users := storage.LoadUsers()
 

@@ -1,13 +1,14 @@
 package err
 
 import "errors"
+import "strings"
 
 var (
-	UserAlreadyExists         error = errors.New("user already exists")
-	MeetingTitleAlreadyExists error = errors.New("title already exists")
-	WrongUsernameOrPassword error = errors.New("wrong username or password")
+	UserAlreadyExists         error = errors.New("User already exists")
+	MeetingTitleAlreadyExists error = errors.New("Title already exists")
+	WrongUsernameOrPassword   error = errors.New("Wrong username or password")
 )
 
 func RequireNonEmpty(key string) error {
-	return errors.New(key + " must be a non-empty value")
+	return errors.New(strings.Title(key) + " must be a non-empty value")
 }
