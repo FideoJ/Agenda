@@ -19,12 +19,6 @@ func Info(format string, v ...interface{}) {
 	infoLogger.Printf(format, v...)
 }
 
-func ErrIf(err error) {
-	if err != nil {
-		errLogger.Println(err)
-	}
-}
-
 func FatalIf(err error) {
 	if err != nil {
 		errLogger.Fatalln(err)

@@ -45,6 +45,11 @@ func Logout() {
 }
 
 func ListAllUsers() {
+	_, loggedIn := storage.LoadCurUser()
+	if !loggedIn {
+		logger.FatalIf(err.RequireLoggedIn)
+	}
+
 	users := storage.LoadUsers()
 
 	fmt.Printf("%-20s %-20s %-20s\n", "USERNAME", "EMAIL", "PHONE")

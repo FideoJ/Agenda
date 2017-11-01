@@ -18,7 +18,7 @@
 - listUsers
   - usage: 用户查询
   - args: None
-  - notes: None
+  - notes: 要求已登录
 - delete
   - usage: 用户删除
   - args: username string, password string

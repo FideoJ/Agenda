@@ -35,12 +35,12 @@ func StoreMeetings(meetings entity.Meetings) {
 	meetings.Serialize(file)
 }
 
-func LoadSession() *entity.Session {
+func LoadCurUser() (string, bool) {
 	file, err := os.OpenFile(SessionFile(), os.O_RDONLY|os.O_CREATE, 0644)
 	logger.FatalIf(err)
 	session := entity.DeserializeSession(file)
 
-	return session
+	return session.CurrentUser, session.CurrentUser != ""
 }
 
 func StoreSession(session *entity.Session) {
