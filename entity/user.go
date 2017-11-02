@@ -16,6 +16,10 @@ type User struct {
 
 type Users map[string]*User
 
+func (users Users) Has(username string) bool {
+	return users[username] != nil
+}
+
 func (users Users) Query(username string) *User {
 	return users[username]
 }

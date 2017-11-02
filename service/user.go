@@ -12,7 +12,7 @@ import (
 func Register(username string, password string, email string, phone string) {
 	users := storage.LoadUsers()
 
-	if users.Query(username) != nil {
+	if users.Has(username) {
 		logger.FatalIf(err.UserAlreadyExists)
 	}
 
