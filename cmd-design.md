@@ -16,44 +16,41 @@
   - args: None
   - notes: 若未登录，则静默
 - listUsers
-  - usage: 用户查询
+  - usage: 列出所有用户
   - args: None
   - notes: 要求已登录
 - delete
   - usage: 用户删除
   - args: username string, password string
   - notes: 若成功删除当前用户，登出
-- createmt (createMeeting)
+- createMeeting
   - usage: 创建会议
-  - args: title string, start_time string, end_time string
-  - notes: 均为必要项。end_time > start_time。
-- addpt (addParticipant)
+  - args: title string, startTime string, endTime string, participants []string
+  - notes: 要求已登录,时间格式:"YYYY:MM:DD HH:mm"
+- addParticipant
   - usage: 增加会议参与者
-  - args: title string, member string
-  - notes: 均为必要项。
-- rmpt (removeParticipant)
+  - args: title string, participant string
+  - notes: 要求已登录,仅能操作当前用户为发起者的会议
+- removeParticipant
   - usage: 删除会议参与者
-  - args: title string, member string
-  - notes: 均为必要项。
-- querymt (queryMeeting)
-  - usage: 查询会议
-  - args: start_time string, end_time string
-  - notes: end_time >= start_time，相等时查询某个时间点的会议（在该时间点开始或结束的会议也被计入）。
-- cancelmt (cancelMeeting)
+  - args: title string, participant string
+  - notes: 要求已登录,仅能操作当前用户为发起者的会议，仅剩发起者的会议应删除
+- listMeetings
+  - usage: 列出所有与当前用户有关的会议
+  - args: None
+  - notes: 要求已登录,时间格式:"YYYY:MM:DD HH:mm"
+- cancelMeeting
   - usage: 取消会议
   - args: title string
-  - notes: 均为必要项。
-- quitmt (quitMeeting)
+  - notes: 要求已登录,仅能操作当前用户为发起者的会议
+- quitMeeting
   - usage: 退出会议
   - args: title string
-  - notes: 均为必要项。
-- clearmt (clearMeeting)
+  - notes: 要求已登录,仅能操作当前用户为参与者的会议
+- clearMeetings
   - usage: 清空会议
   - args: None
-  - notes: None
-
-## TODO
-时间格式及精度（年月日or时分秒）待进一步明确
+  - notes: 要求已登录,清除当前用户为发起者的会议
 
 ## 编码约定
 1. 获得参数并排除空值，使用utils.GetNonEmptyString(cmd, flag)
