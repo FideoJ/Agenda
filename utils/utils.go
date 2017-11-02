@@ -1,8 +1,8 @@
 package utils
 
 import (
-	"../err"
-	"../logger"
+	"github.com/MarshallW906/Agenda/err"
+	"github.com/MarshallW906/Agenda/logger"
 	"github.com/spf13/cobra"
 )
 

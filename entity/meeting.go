@@ -5,7 +5,7 @@ import (
 	"io"
 	"time"
 
-	"../logger"
+	"github.com/MarshallW906/Agenda/logger"
 )
 
 type Meeting struct {

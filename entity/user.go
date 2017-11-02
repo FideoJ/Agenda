@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"io"
 
-	"../logger"
+	"github.com/MarshallW906/Agenda/logger"
 )
 
 type User struct {
