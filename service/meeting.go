@@ -73,6 +73,7 @@ func CancelMeeting(title string) {
 	for _, meeting := range meetings {
 		if meeting.Title == title && meeting.Sponsor == curUser {
 			meetings.Remove(meeting)
+			storage.StoreMeetings(meetings)
 			return
 		}
 	}
@@ -92,8 +93,24 @@ func QuitMeeting(title string) {
 			if len(meeting.Participants) == 0 {
 				meetings.Remove(meeting)
 			}
+			storage.StoreMeetings(meetings)
 			return
 		}
 	}
 	logger.FatalIf(err.MeetingNotFound)
+}
+
+func ClearMeetings() {
+	curUser, loggedIn := storage.LoadCurUser()
+	if !loggedIn {
+		logger.FatalIf(err.RequireLoggedIn)
+	}
+
+	meetings := storage.LoadMeetings()
+	for _, meeting := range meetings {
+		if meeting.Sponsor == curUser {
+			meetings.Remove(meeting)
+		}
+	}
+	storage.StoreMeetings(meetings)
 }
