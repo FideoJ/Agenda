@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/MarshallW906/Agenda/entity"
@@ -178,4 +179,22 @@ func RemoveParticipant(title string, participants []string) {
 		}
 	}
 	logger.FatalIf(err.MeetingNotFound)
+}
+
+func ListAllMeetings() {
+	curUser, loggedIn := storage.LoadCurUser()
+	if !loggedIn {
+		logger.FatalIf(err.RequireLoggedIn)
+	}
+
+	meetings := storage.LoadMeetings()
+	relatedMeetings := meetings.Related(curUser)
+
+	fmt.Printf("%-15s %-15s %-20s %-20s %-10s\n", "TITLE", "SPONSOR", "START-TIME", "END-TIME", "PARTICIPANTS")
+	for _, meeting := range relatedMeetings {
+		fmt.Printf("%-15s %-15s %-20s %-20s %-10s\n",
+			meeting.Title, meeting.Sponsor,
+			meeting.StartTime.Format(time.RFC822), meeting.EndTime.Format(time.RFC822),
+			meeting.Participants)
+	}
 }

@@ -16,6 +16,7 @@ package cmd
 
 import (
 	"github.com/MarshallW906/Agenda/logger"
+	"github.com/MarshallW906/Agenda/service"
 	"github.com/spf13/cobra"
 )
 
@@ -25,7 +26,7 @@ var listMeetingsCmd = &cobra.Command{
 	Short: "List all the meetings",
 	Long:  `List all the meetings. no args.`,
 	Run: func(cmd *cobra.Command, args []string) {
-
+		service.ListAllMeetings()
 		logger.Info("listMeetings called")
 	},
 }
