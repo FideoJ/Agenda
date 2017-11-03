@@ -12,18 +12,53 @@ type Meeting struct {
 	Title        string
 	StartTime    time.Time
 	EndTime      time.Time
-	Sponsor      *User
+	Sponsor      string
 	Participants []string
+}
+
+func (meeting *Meeting) IsParticipant(username string) bool {
+	for _, participant := range meeting.Participants {
+		if participant == username {
+			return true
+		}
+	}
+	return false
+}
+
+func (meeting *Meeting) RemoveParticipant(username string) {
+	len := len(meeting.Participants)
+	for i, participant := range meeting.Participants {
+		if participant == username {
+			meeting.Participants[i] = meeting.Participants[len-1]
+			meeting.Participants = meeting.Participants[:len-1]
+			return
+		}
+	}
 }
 
 type Meetings map[string]*Meeting
 
-func (meetings Meetings) Query(title string) *Meeting {
-	return meetings[title]
+func (meetings Meetings) Has(title string) bool {
+	return meetings[title] != nil
 }
 
 func (meetings Meetings) Add(meeting *Meeting) {
 	meetings[meeting.Title] = meeting
+}
+
+func (meetings Meetings) Remove(meeting *Meeting) {
+	delete(meetings, meeting.Title)
+}
+
+func (meetings Meetings) Related(username string) Meetings {
+	related := make(Meetings)
+	for _, meeting := range meetings {
+		if meeting.Sponsor == username || meeting.IsParticipant(username) {
+			related[meeting.Title] = meeting
+		}
+	}
+
+	return related
 }
 
 func (meetings Meetings) Serialize(w io.Writer) {

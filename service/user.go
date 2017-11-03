@@ -12,7 +12,7 @@ import (
 func Register(username string, password string, email string, phone string) {
 	users := storage.LoadUsers()
 
-	if users.Query(username) != nil {
+	if users.Has(username) {
 		logger.FatalIf(err.UserAlreadyExists)
 	}
 
@@ -58,8 +58,10 @@ func ListAllUsers() {
 	}
 }
 
-func DeleteUser(username string, password string) {
+func RemoveUser(username string, password string) {
 	users := storage.LoadUsers()
+	meetings := storage.LoadMeetings()
+
 	user := users.Query(username)
 
 	if user == nil || user.Password != password {
@@ -70,6 +72,20 @@ func DeleteUser(username string, password string) {
 	if curUser == username {
 		Logout()
 	}
-	users.Delete(user)
+	users.Remove(user)
+
+	for _, meeting := range meetings {
+		if meeting.Sponsor == username {
+			meetings.Remove(meeting)
+		}
+		if meeting.IsParticipant(username) {
+			meeting.RemoveParticipant(username)
+			if len(meeting.Participants) == 0 {
+				meetings.Remove(meeting)
+			}
+		}
+	}
+
+	storage.StoreMeetings(meetings)
 	storage.StoreUsers(users)
 }

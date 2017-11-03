@@ -16,6 +16,10 @@ type User struct {
 
 type Users map[string]*User
 
+func (users Users) Has(username string) bool {
+	return users[username] != nil
+}
+
 func (users Users) Query(username string) *User {
 	return users[username]
 }
@@ -24,7 +28,7 @@ func (users Users) Add(user *User) {
 	users[user.Username] = user
 }
 
-func (users Users) Delete(user *User) {
+func (users Users) Remove(user *User) {
 	delete(users, user.Username)
 }
 

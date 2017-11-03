@@ -15,30 +15,28 @@
 package cmd
 
 import (
-	"github.com/MarshallW906/Agenda/logger"
-	"github.com/MarshallW906/Agenda/service"
-	"github.com/MarshallW906/Agenda/utils"
-
+	"../logger"
+	"../service"
+	"../utils"
 	"github.com/spf13/cobra"
 )
 
-// deleteCmd represents the delete command
-var deleteCmd = &cobra.Command{
-	Use:   "delete",
-	Short: "Delete a user",
-	Long:  `Delete a user`,
+// quitMeetingCmd represents the quitMeeting command
+var quitMeetingCmd = &cobra.Command{
+	Use:   "quitMeeting",
+	Short: "Quit a meeting",
+	Long:  `Quit a meeting`,
 	Run: func(cmd *cobra.Command, args []string) {
-		username := utils.GetNonEmptyString(cmd, "username")
-		password := utils.GetNonEmptyString(cmd, "password")
+		title := utils.GetNonEmptyString(cmd, "title")
 
-		service.DeleteUser(username, password)
-		logger.Info("Delete called with username:[%+v], password:[%+v]", username, password)
+		service.QuitMeeting(title)
+
+		logger.Info("QuitMeeting called with title: [%+v]", title)
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(deleteCmd)
+	RootCmd.AddCommand(quitMeetingCmd)
 
-	deleteCmd.Flags().StringP("username", "u", "", "specify the to-delete user's username")
-	deleteCmd.Flags().StringP("password", "p", "", "specify the to-delete user's password")
+	quitMeetingCmd.Flags().StringP("title", "t", "", "meeting's title")
 }

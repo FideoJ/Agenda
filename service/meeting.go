@@ -1,46 +1,116 @@
 package service
 
-// import (
-// 	"time"
+import (
+	"time"
 
-// 	"github.com/FideoJ/Agenda/entity"
-// 	"github.com/FideoJ/Agenda/err"
-// 	"github.com/FideoJ/Agenda/storage"
-// )
+	"../entity"
+	"../err"
+	"../logger"
+	"../storage"
+	"../utils"
+)
 
-// var (
-// 	timeLayoutStr string
-// )
+func CreateMeeting(title string, startTimeStr string, endTimeStr string, participants []string) {
+	curUser, loggedIn := storage.LoadCurUser()
+	if !loggedIn {
+		logger.FatalIf(err.RequireLoggedIn)
+	}
 
-// func init() {
-// 	timeLayoutStr = "2006-01-02/15:04:05"
-// }
+	meetings := storage.LoadMeetings()
+	if meetings.Has(title) {
+		logger.FatalIf(err.TitleAlreadyExists)
+	}
 
-// func CreateMt(title string, startTimeStr string, endTimeStr string, participants []string) error {
-// 	// users := storage.LoadUsers()
-// 	meetings := storage.LoadMeetings()
-// 	if meetings.Query(title) != nil {
-// 		return err.MeetingTitleAlreadyExists
-// 	}
+	sTime, timeerr := time.Parse(utils.TimeLayout, startTimeStr)
+	logger.FatalIf(timeerr)
+	eTime, timeerr := time.Parse(utils.TimeLayout, endTimeStr)
+	logger.FatalIf(timeerr)
+	if !sTime.Before(eTime) {
+		logger.FatalIf(err.StartTimeNotBeforeEndTime)
+	}
 
-// 	sTime, terr := time.Parse(timeLayoutStr, startTimeStr)
-// 	if terr != nil {
-// 		return terr
-// 	}
-// 	eTime, terr := time.Parse(timeLayoutStr, endTimeStr)
-// 	if terr != nil {
-// 		return terr
-// 	}
+	users := storage.LoadUsers()
+	referredUsers := make(map[string]bool)
 
-// 	var sponsorUsr *entity.User
+	attendants := append([]string(nil), curUser)
+	attendants = append(attendants, participants...)
 
-// 	meetings.Add(&entity.Meeting{
-// 		Title:        title,
-// 		StartTime:    sTime,
-// 		EndTime:      eTime,
-// 		Sponsor:      sponsorUsr,
-// 		Participants: participants,
-// 	})
-// 	storage.StoreMeetings(meetings)
-// 	return nil
-// }
+	for _, attendant := range attendants {
+		if !users.Has(attendant) {
+			logger.FatalIf(err.UserNotExist)
+		}
+		if _, referred := referredUsers[attendant]; referred {
+			logger.FatalIf(err.AttendantsDuplicated)
+		}
+		referredUsers[attendant] = true
+
+		relatedMeetings := meetings.Related(attendant)
+		for _, relatedMeeting := range relatedMeetings {
+			if utils.Overlapped(relatedMeeting.StartTime, relatedMeeting.EndTime, sTime, eTime) {
+				logger.FatalIf(err.TimeConflicted(attendant, relatedMeeting))
+			}
+		}
+	}
+
+	meetings.Add(&entity.Meeting{
+		Title:        title,
+		StartTime:    sTime,
+		EndTime:      eTime,
+		Sponsor:      curUser,
+		Participants: participants,
+	})
+
+	storage.StoreMeetings(meetings)
+}
+
+func CancelMeeting(title string) {
+	curUser, loggedIn := storage.LoadCurUser()
+	if !loggedIn {
+		logger.FatalIf(err.RequireLoggedIn)
+	}
+
+	meetings := storage.LoadMeetings()
+	for _, meeting := range meetings {
+		if meeting.Title == title && meeting.Sponsor == curUser {
+			meetings.Remove(meeting)
+			storage.StoreMeetings(meetings)
+			return
+		}
+	}
+	logger.FatalIf(err.MeetingNotFound)
+}
+
+func QuitMeeting(title string) {
+	curUser, loggedIn := storage.LoadCurUser()
+	if !loggedIn {
+		logger.FatalIf(err.RequireLoggedIn)
+	}
+
+	meetings := storage.LoadMeetings()
+	for _, meeting := range meetings {
+		if meeting.Title == title && meeting.IsParticipant(curUser) {
+			meeting.RemoveParticipant(curUser)
+			if len(meeting.Participants) == 0 {
+				meetings.Remove(meeting)
+			}
+			storage.StoreMeetings(meetings)
+			return
+		}
+	}
+	logger.FatalIf(err.MeetingNotFound)
+}
+
+func ClearMeetings() {
+	curUser, loggedIn := storage.LoadCurUser()
+	if !loggedIn {
+		logger.FatalIf(err.RequireLoggedIn)
+	}
+
+	meetings := storage.LoadMeetings()
+	for _, meeting := range meetings {
+		if meeting.Sponsor == curUser {
+			meetings.Remove(meeting)
+		}
+	}
+	storage.StoreMeetings(meetings)
+}
