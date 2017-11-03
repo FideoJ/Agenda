@@ -60,6 +60,8 @@ func ListAllUsers() {
 
 func RemoveUser(username string, password string) {
 	users := storage.LoadUsers()
+	meetings := storage.LoadMeetings()
+
 	user := users.Query(username)
 
 	if user == nil || user.Password != password {
@@ -71,5 +73,19 @@ func RemoveUser(username string, password string) {
 		Logout()
 	}
 	users.Remove(user)
+
+	for _, meeting := range meetings {
+		if meeting.Sponsor == username {
+			meetings.Remove(meeting)
+		}
+		if meeting.IsParticipant(username) {
+			meeting.RemoveParticipant(username)
+			if len(meeting.Participants) == 0 {
+				meetings.Remove(meeting)
+			}
+		}
+	}
+
+	storage.StoreMeetings(meetings)
 	storage.StoreUsers(users)
 }
