@@ -16,6 +16,15 @@ type Meeting struct {
 	Participants []string
 }
 
+func (meeting Meeting) IsParticipant(username string) bool {
+	for _, participant := range meeting.Participants {
+		if participant == username {
+			return true
+		}
+	}
+	return false
+}
+
 type Meetings map[string]*Meeting
 
 func (meetings Meetings) Has(title string) bool {
@@ -33,15 +42,7 @@ func (meetings Meetings) Remove(meeting *Meeting) {
 func (meetings Meetings) Related(username string) Meetings {
 	related := make(Meetings)
 	for _, meeting := range meetings {
-		isParticipant := false
-
-		for _, participant := range meeting.Participants {
-			if participant == username {
-				isParticipant = true
-			}
-		}
-
-		if meeting.Sponsor == username || isParticipant {
+		if meeting.Sponsor == username || meeting.IsParticipant(username) {
 			related[meeting.Title] = meeting
 		}
 	}
