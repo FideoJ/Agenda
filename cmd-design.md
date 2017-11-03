@@ -19,7 +19,7 @@
   - usage: 列出所有用户
   - args: None
   - notes: 要求已登录
-- delete
+- removeUser
   - usage: 用户删除
   - args: username string, password string
   - notes: 若成功删除当前用户，登出

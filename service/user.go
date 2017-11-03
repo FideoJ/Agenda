@@ -58,7 +58,7 @@ func ListAllUsers() {
 	}
 }
 
-func DeleteUser(username string, password string) {
+func RemoveUser(username string, password string) {
 	users := storage.LoadUsers()
 	user := users.Query(username)
 
@@ -70,6 +70,6 @@ func DeleteUser(username string, password string) {
 	if curUser == username {
 		Logout()
 	}
-	users.Delete(user)
+	users.Remove(user)
 	storage.StoreUsers(users)
 }

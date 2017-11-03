@@ -28,7 +28,7 @@ func (users Users) Add(user *User) {
 	users[user.Username] = user
 }
 
-func (users Users) Delete(user *User) {
+func (users Users) Remove(user *User) {
 	delete(users, user.Username)
 }
 

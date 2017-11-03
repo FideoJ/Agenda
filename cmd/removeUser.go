@@ -21,23 +21,23 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// deleteCmd represents the delete command
-var deleteCmd = &cobra.Command{
-	Use:   "delete",
-	Short: "Delete a user",
-	Long:  `Delete a user`,
+// removeUserCmd represents the removeUser command
+var removeUserCmd = &cobra.Command{
+	Use:   "removeUser",
+	Short: "Remove a user",
+	Long:  `Remove a user`,
 	Run: func(cmd *cobra.Command, args []string) {
 		username := utils.GetNonEmptyString(cmd, "username")
 		password := utils.GetNonEmptyString(cmd, "password")
 
-		service.DeleteUser(username, password)
-		logger.Info("Delete called with username:[%+v], password:[%+v]", username, password)
+		service.removeUser(username, password)
+		logger.Info("RemoveUser called with username:[%+v], password:[%+v]", username, password)
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(deleteCmd)
+	RootCmd.AddCommand(removeUserCmd)
 
-	deleteCmd.Flags().StringP("username", "u", "", "specify the to-delete user's username")
-	deleteCmd.Flags().StringP("password", "p", "", "specify the to-delete user's password")
+	removeUserCmd.Flags().StringP("username", "u", "", "specify username")
+	removeUserCmd.Flags().StringP("password", "p", "", "specify password")
 }
