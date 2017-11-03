@@ -16,6 +16,7 @@ var (
 	AttendantsDuplicated      error = errors.New("Attendants duplicated")
 	TitleAlreadyExists        error = errors.New("Title already exists")
 	StartTimeNotBeforeEndTime error = errors.New("Start time not before end time")
+	MeetingNotFound           error = errors.New("Meeting not found")
 )
 
 func RequireNonEmpty(key string) error {

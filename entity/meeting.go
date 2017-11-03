@@ -26,6 +26,10 @@ func (meetings Meetings) Add(meeting *Meeting) {
 	meetings[meeting.Title] = meeting
 }
 
+func (meetings Meetings) Remove(meeting *Meeting) {
+	delete(meetings, meeting.Title)
+}
+
 func (meetings Meetings) Related(username string) Meetings {
 	related := make(Meetings)
 	for _, meeting := range meetings {

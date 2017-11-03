@@ -62,3 +62,19 @@ func CreateMeeting(title string, startTimeStr string, endTimeStr string, partici
 
 	storage.StoreMeetings(meetings)
 }
+
+func CancelMeeting(title string) {
+	curUser, loggedIn := storage.LoadCurUser()
+	if !loggedIn {
+		logger.FatalIf(err.RequireLoggedIn)
+	}
+
+	meetings := storage.LoadMeetings()
+	for _, meeting := range meetings {
+		if meeting.Title == title && meeting.Sponsor == curUser {
+			meetings.Remove(meeting)
+			return
+		}
+	}
+	logger.FatalIf(err.MeetingNotFound)
+}
