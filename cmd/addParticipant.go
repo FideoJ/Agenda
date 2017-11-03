@@ -16,6 +16,7 @@ package cmd
 
 import (
 	"github.com/MarshallW906/Agenda/logger"
+	"github.com/MarshallW906/Agenda/service"
 	"github.com/MarshallW906/Agenda/utils"
 	"github.com/spf13/cobra"
 )
@@ -27,9 +28,10 @@ var addParticipantCmd = &cobra.Command{
 	Long: `add a participant to a existed meeting
 	args: title (string), participant (string)`,
 	Run: func(cmd *cobra.Command, args []string) {
-		title := utils.GetNonEmptyString(cmd, "username")
+		title := utils.GetNonEmptyString(cmd, "title")
 		participants := utils.GetNonEmptyStringSlice(cmd, "participants")
 
+		service.AddParticipant(title, participants)
 		logger.Info("addParticipant called with title: [%+v], participants: [%+v]", title, participants)
 	},
 }

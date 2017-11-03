@@ -114,3 +114,68 @@ func ClearMeetings() {
 	}
 	storage.StoreMeetings(meetings)
 }
+
+func AddParticipant(title string, participants []string) {
+	curUser, loggedIn := storage.LoadCurUser()
+	if !loggedIn {
+		logger.FatalIf(err.RequireLoggedIn)
+	}
+
+	users := storage.LoadUsers()
+	meetings := storage.LoadMeetings()
+
+	for _, meeting := range meetings {
+		if meeting.Title == title && meeting.Sponsor == curUser {
+			for _, singleParticipant := range participants {
+				if meeting.Sponsor == singleParticipant {
+					logger.FatalIf(err.AttendantsDuplicated)
+				}
+
+				if users.Has(singleParticipant) {
+					if !meeting.IsParticipant(singleParticipant) {
+						meeting.AddParticipant(singleParticipant)
+					} else {
+						logger.FatalIf(err.AttendantsDuplicated)
+					}
+				} else {
+					logger.FatalIf(err.UserNotExist)
+				}
+			}
+			storage.StoreMeetings(meetings)
+			return
+		}
+	}
+	logger.FatalIf(err.MeetingNotFound)
+}
+
+func RemoveParticipant(title string, participants []string) {
+	curUser, loggedIn := storage.LoadCurUser()
+	if !loggedIn {
+		logger.FatalIf(err.RequireLoggedIn)
+	}
+
+	users := storage.LoadUsers()
+	meetings := storage.LoadMeetings()
+
+	for _, meeting := range meetings {
+		if meeting.Title == title && meeting.Sponsor == curUser {
+			for _, singleParticipant := range participants {
+				if meeting.Sponsor == singleParticipant {
+					logger.FatalIf(err.SponsorRemoveSelf)
+				}
+
+				if users.Has(singleParticipant) && meeting.IsParticipant(singleParticipant) {
+					meeting.RemoveParticipant(singleParticipant)
+				} else {
+					logger.FatalIf(err.UserNotExist)
+				}
+			}
+			if len(meeting.Participants) == 0 {
+				meetings.Remove(meeting)
+			}
+			storage.StoreMeetings(meetings)
+			return
+		}
+	}
+	logger.FatalIf(err.MeetingNotFound)
+}

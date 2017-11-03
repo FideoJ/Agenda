@@ -25,6 +25,10 @@ func (meeting *Meeting) IsParticipant(username string) bool {
 	return false
 }
 
+func (meeting *Meeting) AddParticipant(username string) {
+	meeting.Participants = append(meeting.Participants, username)
+}
+
 func (meeting *Meeting) RemoveParticipant(username string) {
 	len := len(meeting.Participants)
 	for i, participant := range meeting.Participants {
