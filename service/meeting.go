@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/MarshallW906/Agenda/entity"
-	"github.com/MarshallW906/Agenda/err"
-	"github.com/MarshallW906/Agenda/logger"
-	"github.com/MarshallW906/Agenda/storage"
-	"github.com/MarshallW906/Agenda/utils"
+	"../entity"
+	"../err"
+	"../logger"
+	"../storage"
+	"../utils"
 )
 
 func CreateMeeting(title string, startTimeStr string, endTimeStr string, participants []string) {

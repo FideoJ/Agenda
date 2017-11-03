@@ -3,8 +3,8 @@ package utils
 import (
 	"time"
 
-	"github.com/MarshallW906/Agenda/err"
-	"github.com/MarshallW906/Agenda/logger"
+	"../err"
+	"../logger"
 	"github.com/spf13/cobra"
 )
 

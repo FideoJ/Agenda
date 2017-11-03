@@ -3,8 +3,8 @@ package storage
 import (
 	"os"
 
-	"github.com/MarshallW906/Agenda/entity"
-	"github.com/MarshallW906/Agenda/logger"
+	"../entity"
+	"../logger"
 )
 
 func LoadUsers() entity.Users {

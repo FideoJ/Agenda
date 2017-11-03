@@ -3,10 +3,10 @@ package service
 import (
 	"fmt"
 
-	"github.com/MarshallW906/Agenda/entity"
-	"github.com/MarshallW906/Agenda/err"
-	"github.com/MarshallW906/Agenda/logger"
-	"github.com/MarshallW906/Agenda/storage"
+	"../entity"
+	"../err"
+	"../logger"
+	"../storage"
 )
 
 func Register(username string, password string, email string, phone string) {

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/MarshallW906/Agenda/entity"
+	"../entity"
 )
 
 var (

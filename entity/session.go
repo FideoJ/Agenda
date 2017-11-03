@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"io"
 
-	"github.com/MarshallW906/Agenda/logger"
+	"../logger"
 )
 
 type Session struct {
