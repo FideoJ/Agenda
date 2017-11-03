@@ -21,23 +21,22 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// removeUserCmd represents the removeUser command
-var removeUserCmd = &cobra.Command{
-	Use:   "removeUser",
-	Short: "Remove a user",
-	Long:  `Remove a user`,
+// quitMeetingCmd represents the quitMeeting command
+var quitMeetingCmd = &cobra.Command{
+	Use:   "quitMeeting",
+	Short: "Quit a meeting",
+	Long:  `Quit a meeting`,
 	Run: func(cmd *cobra.Command, args []string) {
-		username := utils.GetNonEmptyString(cmd, "username")
-		password := utils.GetNonEmptyString(cmd, "password")
+		title := utils.GetNonEmptyString(cmd, "title")
 
-		service.RemoveUser(username, password)
-		logger.Info("RemoveUser called with username:[%+v], password:[%+v]", username, password)
+		service.QuitMeeting(title)
+
+		logger.Info("QuitMeeting called with title: [%+v]", title)
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(removeUserCmd)
+	RootCmd.AddCommand(quitMeetingCmd)
 
-	removeUserCmd.Flags().StringP("username", "u", "", "specify username")
-	removeUserCmd.Flags().StringP("password", "p", "", "specify password")
+	quitMeetingCmd.Flags().StringP("title", "t", "", "meeting's title")
 }

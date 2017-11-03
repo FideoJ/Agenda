@@ -16,13 +16,24 @@ type Meeting struct {
 	Participants []string
 }
 
-func (meeting Meeting) IsParticipant(username string) bool {
+func (meeting *Meeting) IsParticipant(username string) bool {
 	for _, participant := range meeting.Participants {
 		if participant == username {
 			return true
 		}
 	}
 	return false
+}
+
+func (meeting *Meeting) RemoveParticipant(username string) {
+	len := len(meeting.Participants)
+	for i, participant := range meeting.Participants {
+		if participant == username {
+			meeting.Participants[i] = meeting.Participants[len-1]
+			meeting.Participants = meeting.Participants[:len-1]
+			return
+		}
+	}
 }
 
 type Meetings map[string]*Meeting

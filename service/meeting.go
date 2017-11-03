@@ -78,3 +78,22 @@ func CancelMeeting(title string) {
 	}
 	logger.FatalIf(err.MeetingNotFound)
 }
+
+func QuitMeeting(title string) {
+	curUser, loggedIn := storage.LoadCurUser()
+	if !loggedIn {
+		logger.FatalIf(err.RequireLoggedIn)
+	}
+
+	meetings := storage.LoadMeetings()
+	for _, meeting := range meetings {
+		if meeting.Title == title && meeting.IsParticipant(curUser) {
+			meeting.RemoveParticipant(curUser)
+			if len(meeting.Participants) == 0 {
+				meetings.Remove(meeting)
+			}
+			return
+		}
+	}
+	logger.FatalIf(err.MeetingNotFound)
+}
