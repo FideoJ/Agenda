@@ -31,7 +31,7 @@ var listMeetingsCmd = &cobra.Command{
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		service.ListAllMeetings()
-		logger.Info("listMeetings called")
+		logger.Info("ListMeetings called")
 	},
 }
 

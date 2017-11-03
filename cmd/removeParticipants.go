@@ -21,11 +21,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// removeParticipantCmd represents the removeParticipant command
-var removeParticipantCmd = &cobra.Command{
-	Use:   "removeParticipant",
-	Short: "remove a participant of a existed meeting",
-	Long: `remove a participant of a existed meeting
+// removeParticipantsCmd represents the removeParticipants command
+var removeParticipantsCmd = &cobra.Command{
+	Use:   "removeParticipants",
+	Short: "Remove participants of a existed meeting",
+	Long: `Remove participants of a existed meeting
 	- usage: 删除会议参与者
 	- args: title string, participant string
 	- notes: 要求已登录,仅能操作当前用户为发起者的会议，仅剩发起者的会议应删除
@@ -34,14 +34,14 @@ var removeParticipantCmd = &cobra.Command{
 		title := utils.GetNonEmptyString(cmd, "title")
 		participants := utils.GetNonEmptyStringSlice(cmd, "participants")
 
-		service.RemoveParticipant(title, participants)
-		logger.Info("removeParticipant called with title: [%+v], participants: [%+v]", title, participants)
+		service.RemoveParticipants(title, participants)
+		logger.Info("RemoveParticipants called with title: [%+v], participants: [%+v]", title, participants)
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(removeParticipantCmd)
+	RootCmd.AddCommand(removeParticipantsCmd)
 
-	removeParticipantCmd.Flags().StringP("title", "t", "", "meeting's title")
-	removeParticipantCmd.Flags().StringSliceP("participants", "p", make([]string, 0), "participants to remove")
+	removeParticipantsCmd.Flags().StringP("title", "t", "", "meeting's title")
+	removeParticipantsCmd.Flags().StringSliceP("participants", "p", make([]string, 0), "participants to remove")
 }

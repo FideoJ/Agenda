@@ -27,13 +27,13 @@
   - usage: 创建会议
   - args: title string, startTime string, endTime string, participants []string
   - notes: 要求已登录,时间格式:"YYYY:MM:DD HH:mm"
-- addParticipant
+- addParticipants
   - usage: 增加会议参与者
-  - args: title string, participant string
+  - args: title string, participants []string
   - notes: 要求已登录,仅能操作当前用户为发起者的会议
-- removeParticipant
+- removeParticipants
   - usage: 删除会议参与者
-  - args: title string, participant string
+  - args: title string, participants []string
   - notes: 要求已登录,仅能操作当前用户为发起者的会议，仅剩发起者的会议应删除
 - listMeetings
   - usage: 列出所有与当前用户有关的会议

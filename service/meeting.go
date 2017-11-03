@@ -116,7 +116,7 @@ func ClearMeetings() {
 	storage.StoreMeetings(meetings)
 }
 
-func AddParticipant(title string, participants []string) {
+func AddParticipants(title string, participants []string) {
 	curUser, loggedIn := storage.LoadCurUser()
 	if !loggedIn {
 		logger.FatalIf(err.RequireLoggedIn)
@@ -149,7 +149,7 @@ func AddParticipant(title string, participants []string) {
 	logger.FatalIf(err.MeetingNotFound)
 }
 
-func RemoveParticipant(title string, participants []string) {
+func RemoveParticipants(title string, participants []string) {
 	curUser, loggedIn := storage.LoadCurUser()
 	if !loggedIn {
 		logger.FatalIf(err.RequireLoggedIn)

@@ -21,24 +21,24 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// addParticipantCmd represents the addParticipant command
-var addParticipantCmd = &cobra.Command{
-	Use:   "addParticipant",
-	Short: "add a participant to a existed meeting",
-	Long: `add a participant to a existed meeting
+// addParticipantsCmd represents the addParticipants command
+var addParticipantsCmd = &cobra.Command{
+	Use:   "addParticipants",
+	Short: "Add participants to a existed meeting",
+	Long: `Add participants to a existed meeting
 	args: title (string), participant (string)`,
 	Run: func(cmd *cobra.Command, args []string) {
 		title := utils.GetNonEmptyString(cmd, "title")
 		participants := utils.GetNonEmptyStringSlice(cmd, "participants")
 
-		service.AddParticipant(title, participants)
-		logger.Info("addParticipant called with title: [%+v], participants: [%+v]", title, participants)
+		service.AddParticipants(title, participants)
+		logger.Info("AddParticipants called with title: [%+v], participants: [%+v]", title, participants)
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(addParticipantCmd)
+	RootCmd.AddCommand(addParticipantsCmd)
 
-	addParticipantCmd.Flags().StringP("title", "t", "", "Meeting's title")
-	addParticipantCmd.Flags().StringSliceP("participants", "p", make([]string, 0), "participants' username")
+	addParticipantsCmd.Flags().StringP("title", "t", "", "Meeting's title")
+	addParticipantsCmd.Flags().StringSliceP("participants", "p", make([]string, 0), "participants' usernames")
 }
