@@ -16,22 +16,27 @@ package cmd
 
 import (
 	"github.com/MarshallW906/Agenda/logger"
-	"github.com/MarshallW906/Agenda/service"
+	"github.com/MarshallW906/Agenda/utils"
 	"github.com/spf13/cobra"
 )
 
-// clearMeetingsCmd represents the clearMeetings command
-var clearMeetingsCmd = &cobra.Command{
-	Use:   "clearMeetings",
-	Short: "Clear all meetings whose sponsor is current user",
-	Long:  `Clear all meetings whose sponsor is current user`,
+// addParticipantCmd represents the addParticipant command
+var addParticipantCmd = &cobra.Command{
+	Use:   "addParticipant",
+	Short: "add a participant to a existed meeting",
+	Long: `add a participant to a existed meeting
+	args: title (string), participant (string)`,
 	Run: func(cmd *cobra.Command, args []string) {
-		service.ClearMeetings()
+		title := utils.GetNonEmptyString(cmd, "username")
+		participants := utils.GetNonEmptyStringSlice(cmd, "participants")
 
-		logger.Info("ClearMeetings called")
+		logger.Info("addParticipant called with title: [%+v], participants: [%+v]", title, participants)
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(clearMeetingsCmd)
+	RootCmd.AddCommand(addParticipantCmd)
+
+	addParticipantCmd.Flags().StringP("title", "t", "", "Meeting's title")
+	addParticipantCmd.Flags().StringSliceP("participants", "p", make([]string, 0), "participants' username")
 }

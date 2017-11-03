@@ -3,11 +3,11 @@ package service
 import (
 	"time"
 
-	"../entity"
-	"../err"
-	"../logger"
-	"../storage"
-	"../utils"
+	"github.com/MarshallW906/Agenda/entity"
+	"github.com/MarshallW906/Agenda/err"
+	"github.com/MarshallW906/Agenda/logger"
+	"github.com/MarshallW906/Agenda/storage"
+	"github.com/MarshallW906/Agenda/utils"
 )
 
 func CreateMeeting(title string, startTimeStr string, endTimeStr string, participants []string) {

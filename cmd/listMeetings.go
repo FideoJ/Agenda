@@ -16,22 +16,20 @@ package cmd
 
 import (
 	"github.com/MarshallW906/Agenda/logger"
-	"github.com/MarshallW906/Agenda/service"
 	"github.com/spf13/cobra"
 )
 
-// clearMeetingsCmd represents the clearMeetings command
-var clearMeetingsCmd = &cobra.Command{
-	Use:   "clearMeetings",
-	Short: "Clear all meetings whose sponsor is current user",
-	Long:  `Clear all meetings whose sponsor is current user`,
+// listMeetingsCmd represents the listMeetings command
+var listMeetingsCmd = &cobra.Command{
+	Use:   "listMeetings",
+	Short: "List all the meetings",
+	Long:  `List all the meetings. no args.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		service.ClearMeetings()
 
-		logger.Info("ClearMeetings called")
+		logger.Info("listMeetings called")
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(clearMeetingsCmd)
+	RootCmd.AddCommand(listMeetingsCmd)
 }
