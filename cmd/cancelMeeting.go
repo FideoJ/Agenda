@@ -25,7 +25,11 @@ import (
 var cancelMeetingCmd = &cobra.Command{
 	Use:   "cancelMeeting",
 	Short: "Cancel a meeting",
-	Long:  `Cancel a meeting`,
+	Long: `Cancel a meeting
+	- 取消会议
+	- args: title (string)
+	- notes: 要求已登录,仅能操作当前用户为发起者的会议
+	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		title := utils.GetNonEmptyString(cmd, "title")
 

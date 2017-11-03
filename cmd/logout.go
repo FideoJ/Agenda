@@ -25,7 +25,11 @@ import (
 var logoutCmd = &cobra.Command{
 	Use:   "logout",
 	Short: "Logout",
-	Long:  `Logout`,
+	Long: `Logout
+	- 用户登出
+	- args: None
+	- notes: 若未登录，则静默
+	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		service.Logout()
 

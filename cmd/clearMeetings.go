@@ -24,7 +24,11 @@ import (
 var clearMeetingsCmd = &cobra.Command{
 	Use:   "clearMeetings",
 	Short: "Clear all meetings whose sponsor is current user",
-	Long:  `Clear all meetings whose sponsor is current user`,
+	Long: `Clear all meetings whose sponsor is current user
+	- 清空会议
+	- args: None
+	- notes: 要求已登录,清除当前用户为发起者的会议
+	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		service.ClearMeetings()
 
