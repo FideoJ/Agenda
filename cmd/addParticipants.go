@@ -21,26 +21,24 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// quitMeetingCmd represents the quitMeeting command
-var quitMeetingCmd = &cobra.Command{
-	Use:   "quitMeeting",
-	Short: "Quit a meeting",
-	Long: `Quit a meeting
-	- 退出会议
-	- args: title string
-	- notes: 要求已登录,仅能操作当前用户为参与者的会议
-	`,
+// addParticipantCmd represents the addParticipant command
+var addParticipantCmd = &cobra.Command{
+	Use:   "addParticipant",
+	Short: "add a participant to a existed meeting",
+	Long: `add a participant to a existed meeting
+	args: title (string), participant (string)`,
 	Run: func(cmd *cobra.Command, args []string) {
 		title := utils.GetNonEmptyString(cmd, "title")
+		participants := utils.GetNonEmptyStringSlice(cmd, "participants")
 
-		service.QuitMeeting(title)
-
-		logger.Info("QuitMeeting called with title: [%+v]", title)
+		service.AddParticipant(title, participants)
+		logger.Info("addParticipant called with title: [%+v], participants: [%+v]", title, participants)
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(quitMeetingCmd)
+	RootCmd.AddCommand(addParticipantCmd)
 
-	quitMeetingCmd.Flags().StringP("title", "t", "", "meeting's title")
+	addParticipantCmd.Flags().StringP("title", "t", "", "Meeting's title")
+	addParticipantCmd.Flags().StringSliceP("participants", "p", make([]string, 0), "participants' username")
 }

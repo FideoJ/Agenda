@@ -25,7 +25,11 @@ import (
 var createMeetingCmd = &cobra.Command{
 	Use:   "createMeeting",
 	Short: "Create a meeting",
-	Long:  `Create a meeting`,
+	Long: `Create a meeting
+	- 创建会议
+	- args: title string, startTime string, endTime string, participants []string
+	- notes: 要求已登录,时间格式:"YYYY:MM:DD HH:mm"
+	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		title := utils.GetNonEmptyString(cmd, "title")
 		startTimeStr := utils.GetNonEmptyString(cmd, "startTime")

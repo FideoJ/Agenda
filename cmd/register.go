@@ -18,6 +18,7 @@ import (
 	"../logger"
 	"../service"
 	"../utils"
+
 	"github.com/spf13/cobra"
 )
 
@@ -25,7 +26,10 @@ import (
 var registerCmd = &cobra.Command{
 	Use:   "register",
 	Short: "Register a user",
-	Long:  `Register a user`,
+	Long: `Register a user
+	- usage: 用户注册
+	- args: username string, password string, email string, phone string
+	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		username := utils.GetNonEmptyString(cmd, "username")
 		password := utils.GetNonEmptyString(cmd, "password")

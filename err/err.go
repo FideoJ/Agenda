@@ -17,6 +17,7 @@ var (
 	TitleAlreadyExists        error = errors.New("Title already exists")
 	StartTimeNotBeforeEndTime error = errors.New("Start time not before end time")
 	MeetingNotFound           error = errors.New("Meeting not found")
+	SponsorRemoveSelf         error = errors.New("Sponsor remove himself")
 )
 
 func RequireNonEmpty(key string) error {

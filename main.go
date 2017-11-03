@@ -15,8 +15,8 @@
 package main
 
 import (
-	"./cmd"
-	"./storage"
+	"github.com/MarshallW906/Agenda/cmd"
+	"github.com/MarshallW906/Agenda/storage"
 )
 
 func init() {

@@ -17,26 +17,24 @@ package cmd
 import (
 	"../logger"
 	"../service"
-
 	"github.com/spf13/cobra"
 )
 
-// listUsersCmd represents the listUsers command
-var listUsersCmd = &cobra.Command{
-	Use:   "listUsers",
-	Short: "List all users",
-	Long: `List all users
-	- 列出所有用户
+// listMeetingsCmd represents the listMeetings command
+var listMeetingsCmd = &cobra.Command{
+	Use:   "listMeetings",
+	Short: "List all the meetings",
+	Long: `List all the meetings. no args.
+	- usage: 列出所有与当前用户有关的会议
 	- args: None
-	- notes: 要求已登录
+	- notes: 要求已登录,列出的会议包括该用户发起的，和参与的会议"
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
-		service.ListAllUsers()
-
-		logger.Info("ListUsers called")
+		service.ListAllMeetings()
+		logger.Info("listMeetings called")
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(listUsersCmd)
+	RootCmd.AddCommand(listMeetingsCmd)
 }
