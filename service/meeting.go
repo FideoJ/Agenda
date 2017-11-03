@@ -190,11 +190,14 @@ func ListAllMeetings() {
 	meetings := storage.LoadMeetings()
 	relatedMeetings := meetings.Related(curUser)
 
-	fmt.Printf("%-15s %-15s %-20s %-20s %-10s\n", "TITLE", "SPONSOR", "START-TIME", "END-TIME", "PARTICIPANTS")
+	fmt.Printf("%-15s %-15s %-20s %-20s %-12s\n", "TITLE", "SPONSOR", "START-TIME", "END-TIME", "PARTICIPANTS")
 	for _, meeting := range relatedMeetings {
-		fmt.Printf("%-15s %-15s %-20s %-20s %-10s\n",
+		fmt.Printf("%-15s %-15s %-20s %-20s",
 			meeting.Title, meeting.Sponsor,
-			meeting.StartTime.Format(time.RFC822), meeting.EndTime.Format(time.RFC822),
-			meeting.Participants)
+			meeting.StartTime.Format(utils.TimeLayout), meeting.EndTime.Format(utils.TimeLayout))
+		for _, singleParticipant := range meeting.Participants {
+			fmt.Printf(" %-12s  ", singleParticipant)
+		}
+		fmt.Printf("\n")
 	}
 }
