@@ -3,8 +3,8 @@ package storage
 import (
 	"os"
 
-	"../entity"
-	"../logger"
+	"github.com/FideoJ/Agenda/entity"
+	"github.com/FideoJ/Agenda/logger"
 )
 
 func LoadUsers() entity.Users {

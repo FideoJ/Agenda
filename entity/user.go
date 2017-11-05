@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"io"
 
-	"../logger"
+	"github.com/FideoJ/Agenda/logger"
 )
 
 type User struct {

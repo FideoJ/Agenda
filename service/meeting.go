@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"time"
 
-	"../entity"
-	"../err"
-	"../logger"
-	"../storage"
-	"../utils"
+	"github.com/FideoJ/Agenda/entity"
+	"github.com/FideoJ/Agenda/err"
+	"github.com/FideoJ/Agenda/logger"
+	"github.com/FideoJ/Agenda/storage"
+	"github.com/FideoJ/Agenda/utils"
 )
 
 func CreateMeeting(title string, startTimeStr string, endTimeStr string, participants []string) {

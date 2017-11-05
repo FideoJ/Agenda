@@ -3,8 +3,8 @@ package utils
 import (
 	"time"
 
-	"../err"
-	"../logger"
+	"github.com/FideoJ/Agenda/err"
+	"github.com/FideoJ/Agenda/logger"
 	"github.com/spf13/cobra"
 )
 

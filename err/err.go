@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"../entity"
+	"github.com/FideoJ/Agenda/entity"
 )
 
 var (

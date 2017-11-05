@@ -3,10 +3,10 @@ package service
 import (
 	"fmt"
 
-	"../entity"
-	"../err"
-	"../logger"
-	"../storage"
+	"github.com/FideoJ/Agenda/entity"
+	"github.com/FideoJ/Agenda/err"
+	"github.com/FideoJ/Agenda/logger"
+	"github.com/FideoJ/Agenda/storage"
 )
 
 func Register(username string, password string, email string, phone string) {

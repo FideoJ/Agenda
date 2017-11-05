@@ -38,7 +38,7 @@
 - listMeetings
   - usage: 列出所有与当前用户有关的会议
   - args: None
-  - notes: 要求已登录,时间格式:"YYYY:MM:DD HH:mm"
+  - notes: 要求已登录,时间格式:"YYYY-MM-DD HH:mm"
 - cancelMeeting
   - usage: 取消会议
   - args: title string
