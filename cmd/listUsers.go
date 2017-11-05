@@ -15,8 +15,8 @@
 package cmd
 
 import (
-	"../logger"
-	"../service"
+	"github.com/FideoJ/Agenda/logger"
+	"github.com/FideoJ/Agenda/service"
 
 	"github.com/spf13/cobra"
 )
