@@ -5,7 +5,7 @@ import (
 	"io"
 	"time"
 
-	"../logger"
+	"github.com/FideoJ/Agenda/logger"
 )
 
 type Meeting struct {

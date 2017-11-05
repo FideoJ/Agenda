@@ -15,8 +15,8 @@
 package main
 
 import (
-	"github.com/MarshallW906/Agenda/cmd"
-	"github.com/MarshallW906/Agenda/storage"
+	"github.com/FideoJ/Agenda/cmd"
+	"github.com/FideoJ/Agenda/storage"
 )
 
 func init() {
